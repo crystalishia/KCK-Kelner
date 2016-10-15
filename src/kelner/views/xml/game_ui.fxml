@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Font?>
+
+<!-- change for sth better -->
+<StackPane prefWidth="1000" prefHeight="600" fx:controller="kelner.controllers.GameController" xmlns:fx="http://javafx.com/fxml">
+
+    <fx:define>
+        <Font fx:id="FONT" size="18" />
+    </fx:define>
+
+    <Button text="Nowy klient" prefWidth="200" font="$FONT" onAction="#actionAddNewClient" />
+
+</StackPane>
