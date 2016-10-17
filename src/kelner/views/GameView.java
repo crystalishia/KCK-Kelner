@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import kelner.components.UserException;
 
 import java.io.IOException;
 
@@ -56,7 +57,7 @@ public class GameView {
             }
         }
 
-        if (throwException) throw new Exception("Element with id = " + id + " not found");
+        if (throwException) throw new UserException("Element with id = " + id + " not found");
 
         return null;
     }

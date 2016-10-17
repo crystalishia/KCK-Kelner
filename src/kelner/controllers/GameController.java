@@ -2,6 +2,7 @@ package kelner.controllers;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import kelner.components.UserException;
 import kelner.models.HistoryLogger;
 import kelner.models.Parser;
 import kelner.views.GameView;
@@ -16,8 +17,8 @@ public class GameController extends Application {
         try {
             gameView = new GameView(primaryStage);
             gameView.render();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (UserException e) {
+            e.handleException(primaryStage);
             return;
         }
 
