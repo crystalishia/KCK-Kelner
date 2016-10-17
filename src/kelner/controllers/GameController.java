@@ -1,9 +1,9 @@
 package kelner.controllers;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-import kelner.models.validators.FreeTableValidator;
+import kelner.models.HistoryLogger;
+import kelner.models.Parser;
 import kelner.views.GameView;
 
 public class GameController extends Application {
@@ -11,22 +11,32 @@ public class GameController extends Application {
     private GameView gameView;
 
 
-    public static void main(String... args) {
-        launch(args);
-    }
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        gameView = new GameView(primaryStage);
-        gameView.render();
+        try {
+            gameView = new GameView(primaryStage);
+            gameView.render();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        gameView.setUpSubmitClickListener(event -> actionOnSubmitClick());
+        HistoryLogger.init(gameView.getHistoryListView());
+
     }
 
+    private void actionOnSubmitClick() {
 
-    public void actionAddNewClient(ActionEvent event) {
+        String text = gameView.getCommandField().getText();
 
-        if (FreeTableValidator.validate()) {
-            // find free table and assign to new ppl
+        if (text.isEmpty()) {
+            gameView.setErrorText("Command is empty");
+        } else {
+            gameView.clearErrorField();
+
+            Parser parser = new Parser(text);
+
         }
 
     }
