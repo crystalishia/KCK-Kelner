@@ -1,7 +1,9 @@
 package kelner.views;
 
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,32 +31,34 @@ public class GameView {
 
         try {
             Parent root = FXMLLoader.load(getClass().getResource("xml/game_ui.fxml"));
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
 
-            commandField = (TextField) root.lookup("#command_field");
-            if (commandField == null) {
-                throw new Exception("Missing command field");
-            }
-
-            submitButton = (Button) root.lookup("#submit_button");
-            if (commandField == null) {
-                throw new Exception("Missing submit button");
-            }
-
-            errorLabel = (Text) root.lookup("#error_label");
-            if (errorLabel == null) {
-                throw new Exception("Missing error label");
-            }
-
-            historyListView = (ListView) root.lookup("#history_listview");
-            if (historyListView == null) {
-                throw new Exception("Missing history ListView");
-            }
+            commandField = (TextField) findById(root, "command_field", true);
+            submitButton = (Button) findById(root, "submit_button", true);
+            errorLabel = (Text) findById(root, "error_label", true);
+            historyListView = (ListView) findById(root, "history_listview", true);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private Node findById(Parent root, String id, boolean throwException) throws Exception {
+
+        for (Node node : root.getChildrenUnmodifiable()) {
+            if (node.getId() != null && node.getId().equals(id)) {
+                return node;
+            } else if (node instanceof Parent) {
+                Node parent = findById((Parent) node, id, false);
+                if (parent != null) return parent;
+            }
+        }
+
+        if (throwException) throw new Exception("Element with id = " + id + " not found");
+
+        return null;
     }
 
     public void setUpSubmitClickListener(EventHandler<MouseEvent> event) {
@@ -75,6 +79,10 @@ public class GameView {
 
     public void clearErrorField() {
         setErrorText("");
+    }
+
+    public void clearCommandField() {
+        commandField.clear();
     }
 
     public void render() {

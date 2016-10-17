@@ -23,19 +23,20 @@ public class GameController extends Application {
 
         gameView.setUpSubmitClickListener(event -> actionOnSubmitClick());
         HistoryLogger.init(gameView.getHistoryListView());
-
     }
 
     private void actionOnSubmitClick() {
 
-        String text = gameView.getCommandField().getText();
+        String command = gameView.getCommandField().getText();
 
-        if (text.isEmpty()) {
+        if (command.isEmpty()) {
             gameView.setErrorText("Command is empty");
         } else {
-            gameView.clearErrorField();
+            gameView.clearCommandField();
+            HistoryLogger.log("Client: " + command);
 
-            Parser parser = new Parser(text);
+            Parser parser = new Parser(command);
+
 
         }
 
