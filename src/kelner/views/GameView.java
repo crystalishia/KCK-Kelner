@@ -51,7 +51,9 @@ public class GameView {
         for (Node node : root.getChildrenUnmodifiable()) {
             if (node.getId() != null && node.getId().equals(id)) {
                 return node;
-            } else if (node instanceof Parent) {
+            }
+
+            if (node instanceof Parent) {
                 Node parent = findById((Parent) node, id, false);
                 if (parent != null) return parent;
             }

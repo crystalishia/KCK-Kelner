@@ -10,11 +10,17 @@ import javafx.stage.Stage;
 
 public class UserException extends Exception {
 
+    private static Stage stage;
+
+    public static void init(Stage stage) {
+        UserException.stage = stage;
+    }
+
     public UserException(String message) {
         super(message);
     }
 
-    public void handleException(Stage stage) {
+    public void handleException() {
 
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
